@@ -9,7 +9,7 @@
 
 <p>Both algorithms works by initially setting each vertex as its own component, and then going through each edge connecting higher numbered component to lower components. This creates a star for each component where the lowest numbered vertex in the component is in the center. This is done through a method named graft.
 
-After grafting is complete, the CPU and GPU synchronize(because we only use the default stream the kernel calls will be queued and we do not need to explicitly synchronize. In the code we have used explicit synchronization to check for errors after each kernel call). We then call a function called shortcut. Another suitable name would be compress. This function simply compresses each component to the root component. E.g. image the graph 4-->2-->1.  The component array would look like this [1][1][x][2]. 1 is the root in this component, and we want every member of this component to be in in the array. This is what the shortcut function does. After the shortcut function is called the component array would be [1][1][x][1].
+After grafting is complete, the CPU and GPU synchronize(because we only use the default stream the kernel calls will be queued and we do not need to explicitly synchronize. In the code we have used explicit synchronization to check for errors after each kernel call). We then call a function called shortcut. Another suitable name would be compress. This function simply compresses each component to the root component. E.g. image the graph 4-->2-->1.  The component array would look like this [1][1][x][2]. 1 is the root in this component, and we want every member of this component to be in in the array. This is what the shortcut function does. After the shortcut function is called the component array would be [1][1][x][1].</p>
 
 ```c
 __global__ void GraftKernel(std::pair<int, int> *graph, const int numEdges, int *component)
@@ -73,8 +73,6 @@ __global__ void UpdateKernel(std::pair<int, int> *graph, const int numEdges, int
 		}
 	}
 ```
-
-</p>
 
 
 
