@@ -11,7 +11,7 @@
 
 After grafting is complete, the CPU and GPU synchronize(because we only use the default stream the kernel calls will be queued and we do not need to explicitly synchronize. In the code we have used explicit synchronization to check for errors after each kernel call). We then call a function called shortcut. Another suitable name would be compress. This function simply compresses each component to the root component. E.g. image the graph 4-->2-->1. The component array would look like this [1][1][x][2]. 1 is the root in this component, and we want every member of this component to be 1 in the array. This is what the shortcut function does. After the shortcut function is called the component array would be [1][1][x][1].</p>
 
-```cuda
+```c
 __global__ void GraftKernel(std::pair<int, int> *graph, const int numEdges, int *component)
 	{
 
@@ -39,7 +39,7 @@ __global__ void GraftKernel(std::pair<int, int> *graph, const int numEdges, int 
 	...
 ```
 
-```cuda
+```c
 __global__ void ShortcutKernel(int *component, const int numVertices)
 	{
 
@@ -60,7 +60,7 @@ __global__ void ShortcutKernel(int *component, const int numVertices)
 The only difference between algorithm one and two is that algorithm two has a function that updates the graph itself instead of just updating the component array. This makes memory access more coalesced
 
 
-```cuda
+```c
 __global__ void UpdateKernel(std::pair<int, int> *graph, const int numEdges, int *component)
 	{
 		const auto tid = blockIdx.x*blockDim.x + threadIdx.x;
