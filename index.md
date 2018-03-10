@@ -78,9 +78,6 @@ __global__ void UpdateKernel(std::pair<int, int> *graph, const int numEdges, int
 
 
 
-
-
-
 ### Stages
 <p>A CUDA implementation of algorithm 3 published by Guojing Cong and Paul Muzio</p>
 
