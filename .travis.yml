@@ -1,11 +1,7 @@
-sudo:          false
-language:      node_js
-node_js:
-  - "node"
-install:       npm install
-script:
-  - npm test
-  - gulp
-cache:
-  directories:
-    - node_modules
+language: ruby
+cache: bundler
+sudo: false
+rvm: 2.2
+
+install: script/bootstrap
+script: script/cibuild
